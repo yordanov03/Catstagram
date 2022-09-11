@@ -39,7 +39,7 @@ namespace Catstagram.Server.Controllers
         }
 
         [Route(nameof(Login))]
-        public async Task<ActionResult<string>> Login(LoginRequestModel model)
+        public async Task<ActionResult<object>> Login(LoginRequestModel model)
         {
             var user = await this.userManager.FindByNameAsync(model.Username);
 
@@ -65,7 +65,7 @@ namespace Catstagram.Server.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var encryptedToken =  tokenHandler.WriteToken(token);
 
-            return encryptedToken;
+            return new { Token = encryptedToken };
         }
     }
 }
