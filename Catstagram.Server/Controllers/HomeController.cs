@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Catstagram.Server.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class HomeController : ControllerBase
-    {   
-        public IActionResult Get()
+    public class HomeController : ApiController
+    {
+        [Authorize]
+        public ActionResult Get()
         {
             return Ok("works");
         }
