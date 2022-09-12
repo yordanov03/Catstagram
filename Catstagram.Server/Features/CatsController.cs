@@ -5,7 +5,7 @@ using Catstagram.Server.Models.Cats;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Catstagram.Server.Controllers
+namespace Catstagram.Server.Features
 {
     public class CatsController : ApiController
     {

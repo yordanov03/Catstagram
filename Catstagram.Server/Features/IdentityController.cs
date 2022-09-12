@@ -8,7 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Catstagram.Server.Controllers
+namespace Catstagram.Server.Features
 {
     public class IdentityController : ApiController
     {

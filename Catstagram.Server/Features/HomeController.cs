@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Catstagram.Server.Controllers
 {
-    public class HomeController : ApiController
+    public class HomeController : Features
     {
         [Authorize]
         public ActionResult Get()
