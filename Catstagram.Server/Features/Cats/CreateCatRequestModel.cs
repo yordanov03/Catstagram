@@ -1,13 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static Catstagram.Server.Data.Validation.Cat;
 
-namespace Catstagram.Server.Models.Cats
+namespace Catstagram.Server.Features.Cats
 {
     public class CreateCatRequestModel
     {
-        [MaxLength(MaxDescriptionLength)]
-        public string Description { get; set; }
         [Required]
         public string ImageUrl { get; set; }
+
+        [MaxLength(MaxDescriptionLength)]
+        public string Description { get; set; }
+
     }
 }

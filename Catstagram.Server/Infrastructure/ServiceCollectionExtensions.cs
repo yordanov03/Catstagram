@@ -1,6 +1,9 @@
 ﻿using Catstagram.Server.Data;
 using Catstagram.Server.Data.Models;
+using Catstagram.Server.Features.Cats;
+using Catstagram.Server.Features.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -8,6 +11,18 @@ namespace Catstagram.Server.Infrastructure
 {
     public static class ServiceCollectionExtensions
     {
+        public static AppSettings GetApplicationSettings(this IServiceCollection services, IConfiguration configuration)
+        {
+            var applicationSettingsConfiguration = configuration.GetSection("ApplicationSettings");
+            services.Configure<AppSettings>(applicationSettingsConfiguration);
+            var appSettings = applicationSettingsConfiguration.Get<AppSettings>();
+            return appSettings;
+        }
+
+        public static IServiceCollection AddDatabase(
+            this IServiceCollection services, IConfiguration configuration)
+            => services.AddDbContext<CatstagramDbContext>(options =>options
+            .UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
         public static IServiceCollection AddIdentity(this IServiceCollection services)
         {
             services.AddDefaultIdentity<User>(options =>
@@ -46,5 +61,10 @@ namespace Catstagram.Server.Infrastructure
                 });
             return services;
         }
+        
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+             => services
+                .AddTransient<IIdentityService, IdentityService>()
+                .AddTransient<ICatsService, CatsService>();
     }
 }
