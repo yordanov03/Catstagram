@@ -3,6 +3,7 @@ using Catstagram.Server.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace Catstagram.Server.Features.Cats
 {
     public class CatsService : ICatsService
