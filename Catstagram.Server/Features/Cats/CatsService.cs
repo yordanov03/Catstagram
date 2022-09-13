@@ -1,5 +1,7 @@
 ﻿using Catstagram.Server.Data;
 using Catstagram.Server.Data.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Catstagram.Server.Features.Cats
 {
@@ -12,6 +14,8 @@ namespace Catstagram.Server.Features.Cats
             this.data = data;
         }
 
+        [HttpPost]
+        [Authorize]
         public async Task<int> Create(string imageUrl, string description, string userId)
         {
             var cat = new Cat
