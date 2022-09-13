@@ -15,8 +15,6 @@ namespace Catstagram.Server.Features.Cats
             this.data = data;
         }
 
-        [HttpPost]
-        [Authorize]
         public async Task<int> Create(string imageUrl, string description, string userId)
         {
             var cat = new Cat

@@ -4,18 +4,16 @@ using Catstagram.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Catstagram.Server.Data.Migrations
+namespace Catstagram.Server.Migrations
 {
     [DbContext(typeof(CatstagramDbContext))]
-    [Migration("20220911184204_initial")]
-    partial class initial
+    partial class CatstagramDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

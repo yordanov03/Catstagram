@@ -1,6 +1,8 @@
-﻿using Catstagram.Server.Infrastructure;
+﻿using Catstagram.Server.Data.Models;
+using Catstagram.Server.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Mime;
 
 namespace Catstagram.Server.Features.Cats
 {
@@ -13,12 +15,14 @@ namespace Catstagram.Server.Features.Cats
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<int>> Create(CreateCatRequestModel model)
+        [Route(nameof(Create))]
+        [Consumes(MediaTypeNames.Application.Json)]
+        public async Task<ActionResult<Cat>> Create(CreateCatRequestModel model)
         {
             var userId = User.GetId();
-            var id = this.catsService.Create(model.ImageUrl, model.Description, userId);
+            var cat = this.catsService.Create(model.ImageUrl, model.Description, userId);
 
-            return Created(nameof(this.Create), id);
+            return CreatedAtAction(nameof(this.Create), cat.Id);
         }
     }
 }
