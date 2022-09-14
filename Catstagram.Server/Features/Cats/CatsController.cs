@@ -40,5 +40,20 @@ namespace Catstagram.Server.Features.Cats
 
             return CreatedAtAction(nameof(this.Create), cat.Id);
         }
+
+        [HttpPut]
+        [Route(nameof(Update))]
+        public async Task<ActionResult> Update(UpdateCatRequestModel model)
+        {
+            var userId = this.User.GetId();
+            var updated = await this.catsService.Update(model.Id, model.Description, userId);
+
+            if (!updated)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
     }
 }
