@@ -9,5 +9,7 @@ namespace Catstagram.Server.Features.Cats
         public Task<IEnumerable<CatListingServiceModel>> ByUser(string userId);
 
         public Task<CatDetailsServiceModel> Details(int id);
+
+        public Task<bool> Update(int id, string description, string userId);
     }
 }
