@@ -3,8 +3,7 @@ using Catstagram.Server.Features.Cats.Models;
 using Catstagram.Server.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
+using static Catstagram.Server.Infrastructure.WebConstants;
 
 namespace Catstagram.Server.Features.Cats
 {
@@ -24,11 +23,11 @@ namespace Catstagram.Server.Features.Cats
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route(RouteId)]
         public async Task<ActionResult<CatDetailsServiceModel>> Details(int id)
             => await this.catsService.Details(id);
 
-            //return cat.Result.OrNotFound();
+        //return cat.Result.OrNotFound();
 
 
         [HttpPost]
@@ -49,6 +48,22 @@ namespace Catstagram.Server.Features.Cats
             var updated = await this.catsService.Update(model.Id, model.Description, userId);
 
             if (!updated)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route(RouteId)]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var userId = this.User.GetId();
+
+            var deleted = await this.catsService.Delete(id, userId);
+
+            if (!deleted)
             {
                 return BadRequest();
             }

@@ -11,5 +11,7 @@ namespace Catstagram.Server.Features.Cats
         public Task<CatDetailsServiceModel> Details(int id);
 
         public Task<bool> Update(int id, string description, string userId);
+
+        public Task<bool> Delete(int id, string userId);
     }
 }
