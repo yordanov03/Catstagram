@@ -1,22 +1,38 @@
 ﻿using Catstagram.Server.Data.Models;
-using Catstagram.Server.Infrastructure;
+using Catstagram.Server.Features.Cats.Models;
+using Catstagram.Server.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Mime;
+using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Catstagram.Server.Features.Cats
 {
+    [Authorize]
     public class CatsController : ApiController
     {
         private readonly ICatsService catsService;
 
         public CatsController(ICatsService catsService) => this.catsService = catsService;
 
+        [HttpGet]
+        [Route("mycats")]
+        public async Task<IEnumerable<CatListingServiceModel>> Mine()
+        {
+            var userId = this.User.GetId();
+            return await this.catsService.ByUser(userId);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<ActionResult<CatDetailsServiceModel>> Details(int id)
+            => await this.catsService.Details(id);
+
+            //return cat.Result.OrNotFound();
+
 
         [HttpPost]
-        [Authorize]
         [Route(nameof(Create))]
-        [Consumes(MediaTypeNames.Application.Json)]
         public async Task<ActionResult<Cat>> Create(CreateCatRequestModel model)
         {
             var userId = User.GetId();

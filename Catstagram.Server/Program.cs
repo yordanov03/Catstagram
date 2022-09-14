@@ -1,4 +1,5 @@
-using Catstagram.Server.Infrastructure;
+using Catstagram.Server.Infrastructure.Extensions;
+using Catstagram.Server.Infrastructure.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,7 @@ builder.Services
     .AddJWTAuthentication(builder.Services.GetApplicationSettings(builder.Configuration))
     .AddApplicationServices()
     .AddSwaggerGen()
-    .AddControllers();
+    .AddApiControllers();
 
 var app = builder.Build();
 

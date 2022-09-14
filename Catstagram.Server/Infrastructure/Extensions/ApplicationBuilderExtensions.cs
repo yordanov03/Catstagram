@@ -1,7 +1,7 @@
 ﻿using Catstagram.Server.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Catstagram.Server.Infrastructure
+namespace Catstagram.Server.Infrastructure.Extensions
 {
     public static class ApplicationBuilderExtensions
     {
