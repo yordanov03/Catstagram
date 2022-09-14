@@ -2,7 +2,6 @@
 using Catstagram.Server.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Mime;
 
 namespace Catstagram.Server.Features.Cats
 {
@@ -12,11 +11,19 @@ namespace Catstagram.Server.Features.Cats
 
         public CatsController(ICatsService catsService) => this.catsService = catsService;
 
+        [HttpPost]
+        [Authorize]
+        [Route(nameof(Mine))]
+        public async Task<IEnumerable<CatListingResponseModel>> Mine()
+        {
+            var userId = this.User.GetId();
+            return await this.catsService.ByUser(userId);
+        }
 
         [HttpPost]
         [Authorize]
         [Route(nameof(Create))]
-        [Consumes(MediaTypeNames.Application.Json)]
+        //[Consumes(MediaTypeNames.Application.Json)]
         public async Task<ActionResult<Cat>> Create(CreateCatRequestModel model)
         {
             var userId = User.GetId();

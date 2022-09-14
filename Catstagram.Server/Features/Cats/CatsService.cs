@@ -2,7 +2,7 @@
 using Catstagram.Server.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace Catstagram.Server.Features.Cats
 {
@@ -28,6 +28,19 @@ namespace Catstagram.Server.Features.Cats
             await data.SaveChangesAsync();
 
             return cat.Id;
+        }
+
+        public async Task<IEnumerable<CatListingResponseModel>> ByUser(string userId)
+        {
+            return await this.data
+                .Cats
+                .Where(c=>c.UserId == userId)
+                .Select(c=> new CatListingResponseModel 
+                {
+                    Id = c.Id,
+                    ImageUrl = c.ImageUrl
+                })
+                .ToListAsync();
         }
     }
 }
