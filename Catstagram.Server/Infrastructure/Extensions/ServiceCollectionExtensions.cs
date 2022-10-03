@@ -3,9 +3,9 @@ using Catstagram.Server.Data.Models;
 using Catstagram.Server.Features.Cats;
 using Catstagram.Server.Features.Identity;
 using Catstagram.Server.Infrastructure.Filters;
+using Catstagram.Server.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -25,6 +25,7 @@ namespace Catstagram.Server.Infrastructure.Extensions
             this IServiceCollection services, IConfiguration configuration)
             => services.AddDbContext<CatstagramDbContext>(options => options
             .UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
         public static IServiceCollection AddIdentity(this IServiceCollection services)
         {
             services.AddDefaultIdentity<User>(options =>
@@ -67,7 +68,8 @@ namespace Catstagram.Server.Infrastructure.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
              => services
                 .AddTransient<IIdentityService, IdentityService>()
-                .AddTransient<ICatsService, CatsService>();
+                .AddTransient<ICatsService, CatsService>()
+                .AddScoped<ICurrentUserService, CurrentUserService>();
 
         public static void AddApiControllers(this IServiceCollection services)
             => services.AddControllers(options => options.Filters.Add<ModelOrNotFoundActionFilter>());

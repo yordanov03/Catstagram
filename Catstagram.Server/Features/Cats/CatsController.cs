@@ -1,6 +1,7 @@
 ﻿using Catstagram.Server.Data.Models;
 using Catstagram.Server.Features.Cats.Models;
 using Catstagram.Server.Infrastructure.Extensions;
+using Catstagram.Server.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static Catstagram.Server.Infrastructure.WebConstants;
@@ -11,6 +12,7 @@ namespace Catstagram.Server.Features.Cats
     public class CatsController : ApiController
     {
         private readonly ICatsService catsService;
+        private readonly ICurrentUserService currentUser;
 
         public CatsController(ICatsService catsService) => this.catsService = catsService;
 
@@ -18,7 +20,7 @@ namespace Catstagram.Server.Features.Cats
         [Route("mycats")]
         public async Task<IEnumerable<CatListingServiceModel>> Mine()
         {
-            var userId = this.User.GetId();
+            var userId = this.currentUser.GetUserId();
             return await this.catsService.ByUser(userId);
         }
 
