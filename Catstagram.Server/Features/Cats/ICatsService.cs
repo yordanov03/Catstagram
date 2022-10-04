@@ -4,14 +4,14 @@ namespace Catstagram.Server.Features.Cats
 {
     public interface ICatsService
     {
-        public Task<int> Create(string imageUrl, string description, string userId);
+        Task<int> Create(string imageUrl, string description, string userId);
 
-        public Task<IEnumerable<CatListingServiceModel>> ByUser(string userId);
+        Task<IEnumerable<CatListingServiceModel>> ByUser(string userId);
 
-        public Task<CatDetailsServiceModel> Details(int id);
+        Task<CatDetailsServiceModel> Details(int id);
 
-        public Task<bool> Update(int id, string description, string userId);
+        Task<bool> Update(int id, string description, string userId);
 
-        public Task<bool> Delete(int id, string userId);
+        Task<bool> Delete(int id, string userId);
     }
 }
