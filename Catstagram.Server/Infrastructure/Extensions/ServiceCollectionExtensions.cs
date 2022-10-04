@@ -2,6 +2,7 @@
 using Catstagram.Server.Data.Models;
 using Catstagram.Server.Features.Cats;
 using Catstagram.Server.Features.Identity;
+using Catstagram.Server.Features.Profiles;
 using Catstagram.Server.Infrastructure.Filters;
 using Catstagram.Server.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -69,7 +70,8 @@ namespace Catstagram.Server.Infrastructure.Extensions
              => services
                 .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<ICatsService, CatsService>()
-                .AddScoped<ICurrentUserService, CurrentUserService>();
+                .AddScoped<ICurrentUserService, CurrentUserService>()
+                .AddTransient<IProfileService, ProfileService>();
 
         public static void AddApiControllers(this IServiceCollection services)
             => services.AddControllers(options => options.Filters.Add<ModelOrNotFoundActionFilter>());
