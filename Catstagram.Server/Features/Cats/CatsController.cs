@@ -43,15 +43,16 @@ namespace Catstagram.Server.Features.Cats
         }
 
         [HttpPut]
-        [Route(nameof(Update))]
-        public async Task<ActionResult> Update(UpdateCatRequestModel model)
+        [Route(RouteId)]
+        public async Task<ActionResult> Update(int id, UpdateCatRequestModel model)
         {
             var userId = this.User.GetId();
-            var updated = await this.catsService.Update(model.Id, model.Description, userId);
+            var updated = await this.catsService
+                .Update(id, model.Description, userId);
 
-            if (!updated)
+            if (updated.Failure)
             {
-                return BadRequest();
+                return BadRequest(updated.Error);
             }
 
             return Ok();
@@ -65,9 +66,9 @@ namespace Catstagram.Server.Features.Cats
 
             var deleted = await this.catsService.Delete(id, userId);
 
-            if (!deleted)
+            if (!deleted.Failure)
             {
-                return BadRequest();
+                return BadRequest(deleted.Error);
             }
 
             return Ok();

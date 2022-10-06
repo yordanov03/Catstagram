@@ -1,4 +1,5 @@
 ﻿using Catstagram.Server.Features.Cats.Models;
+using Catstagram.Server.Infrastructure.Services;
 
 namespace Catstagram.Server.Features.Cats
 {
@@ -10,8 +11,8 @@ namespace Catstagram.Server.Features.Cats
 
         Task<CatDetailsServiceModel> Details(int id);
 
-        Task<bool> Update(int id, string description, string userId);
+        Task<Result> Update(int id, string description, string userId);
 
-        Task<bool> Delete(int id, string userId);
+        Task<Result> Delete(int id, string userId);
     }
 }

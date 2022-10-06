@@ -71,7 +71,7 @@ namespace Catstagram.Server.Infrastructure.Extensions
                 .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<ICatsService, CatsService>()
                 .AddScoped<ICurrentUserService, CurrentUserService>()
-                .AddTransient<IProfileService, ProfileService>();
+                .AddTransient<IProfilesService, ProfilesService>();
 
         public static void AddApiControllers(this IServiceCollection services)
             => services.AddControllers(options => options.Filters.Add<ModelOrNotFoundActionFilter>());

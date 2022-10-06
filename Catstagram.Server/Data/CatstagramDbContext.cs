@@ -17,6 +17,8 @@ namespace Catstagram.Server.Data
         }
 
         public DbSet<Cat> Cats { get; set; }
+
+        public DbSet<Profile> Profiles { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Cat>()
@@ -27,7 +29,10 @@ namespace Catstagram.Server.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<User>()
-                .OwnsOne(u => u.Profile);
+                .HasOne(u => u.Profile)
+                .WithOne()
+                .HasForeignKey<Profile>(p=>p.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }
