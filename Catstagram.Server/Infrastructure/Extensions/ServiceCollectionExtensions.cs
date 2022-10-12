@@ -1,6 +1,7 @@
 ﻿using Catstagram.Server.Data;
 using Catstagram.Server.Data.Models;
 using Catstagram.Server.Features.Cats;
+using Catstagram.Server.Features.Follows;
 using Catstagram.Server.Features.Identity;
 using Catstagram.Server.Features.Profiles;
 using Catstagram.Server.Infrastructure.Filters;
@@ -71,7 +72,8 @@ namespace Catstagram.Server.Infrastructure.Extensions
                 .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<ICatsService, CatsService>()
                 .AddScoped<ICurrentUserService, CurrentUserService>()
-                .AddTransient<IProfilesService, ProfilesService>();
+                .AddTransient<IProfilesService, ProfilesService>()
+                .AddTransient<IFollowService, FollowService>();
 
         public static void AddApiControllers(this IServiceCollection services)
             => services.AddControllers(options => options.Filters.Add<ModelOrNotFoundActionFilter>());

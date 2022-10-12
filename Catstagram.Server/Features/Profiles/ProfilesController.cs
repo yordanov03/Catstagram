@@ -1,7 +1,6 @@
 ﻿using Catstagram.Server.Features.Profiles.Models;
 using Catstagram.Server.Infrastructure.Extensions;
 using Catstagram.Server.Infrastructure.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Catstagram.Server.Features.Profiles
@@ -18,19 +17,17 @@ namespace Catstagram.Server.Features.Profiles
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<ProfileServiceModel>> MyProfile()
         => await this.profilesService.ByUser(this.currentUserService.GetUserId());
 
         [HttpPut]
-        [Authorize]
         public async Task<ActionResult> Update(UpdateProfileRequestModel model)
         {
             var userId = this.User.GetId();
             var result = await this.profilesService
                 .Update(
-                userId, 
-                model.Email, 
+                userId,
+                model.Email,
                 model.Username,
                 model.Name,
                 model.MainPhotoUrl,

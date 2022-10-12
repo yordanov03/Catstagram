@@ -8,7 +8,6 @@ using static Catstagram.Server.Infrastructure.WebConstants;
 
 namespace Catstagram.Server.Features.Cats
 {
-    [Authorize]
     public class CatsController : ApiController
     {
         private readonly ICatsService catsService;
