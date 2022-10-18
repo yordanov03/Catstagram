@@ -14,20 +14,27 @@ namespace Catstagram.Server.Features.Profiles
         public ProfilesService(CatstagramDbContext data)
         => this.data = data;
 
-        public async Task<ProfileServiceModel> ByUser(string userId)
-        => await this.data
-            .Users
+        public async Task<ProfileServiceModel> ByUser(string userId, bool allInformation = false)
+        =>  await this.data.Users
             .Where(u => u.Id == userId)
-            .Select(u => new ProfileServiceModel
-            {
-                Name = u.Profile.Name,
-                Biography = u.Profile.Biography,
-                Gender = u.Profile.Gender.ToString(),
-                MainPhotoUrl = u.Profile.MainPhotoUrl,
-                Website = u.Profile.Website,
-                IsPrivate = u.Profile.isPrivate
-            })
+                    .Select(u => allInformation?
+                    new PublicProfileServiceModel
+                    {
+                        Name = u.Profile.Name,
+                        Biography = u.Profile.Biography,
+                        Gender = u.Profile.Gender.ToString(),
+                        MainPhotoUrl = u.Profile.MainPhotoUrl,
+                        Website = u.Profile.Website,
+                        IsPrivate = u.Profile.isPrivate
+                    }
+                    : new ProfileServiceModel
+                    {
+                        Name = u.Profile.Name,
+                        MainPhotoUrl = u.Profile.MainPhotoUrl,
+                        IsPrivate = u.Profile.isPrivate
+                    })
             .FirstOrDefaultAsync();
+
 
         public async Task<Result> Update(string userId, string email, string username, string name, string mainPhotoUrl, string website, string biography, Gender gender, bool isPrivate)
         {
@@ -147,5 +154,13 @@ namespace Catstagram.Server.Features.Profiles
                 profile.isPrivate = isPrivate;
             }
         }
+
+        public async Task<bool> IsPublic(string userId)
+        => await this.data
+            .Profiles
+            .Where(p=>p.UserId == userId)
+            .Select(p=>!p.isPrivate)
+            .FirstAsync();
+
     }
 }

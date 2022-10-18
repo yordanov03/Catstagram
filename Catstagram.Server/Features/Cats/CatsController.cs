@@ -25,10 +25,8 @@ namespace Catstagram.Server.Features.Cats
 
         [HttpGet]
         [Route(RouteId)]
-        public async Task<ActionResult<CatDetailsServiceModel>> Details(int id)
+        public async Task<CatDetailsServiceModel> Details(int id)
             => await this.catsService.Details(id);
-
-        //return cat.Result.OrNotFound();
 
 
         [HttpPost]

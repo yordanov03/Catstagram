@@ -1,6 +1,6 @@
 ﻿namespace Catstagram.Server.Infrastructure
 {
-    public class WebConstants
+    public static class WebConstants
     {
         public const string RouteId = "{id}";
     }
